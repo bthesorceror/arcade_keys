@@ -1,0 +1,28 @@
+{
+  "name": "arcade_keys",
+  "version": "0.0.1",
+  "description": "front end module for arcade controls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bthesorceror/arcade_keys.git"
+  },
+  "keywords": [
+    "arcade",
+    "controls"
+  ],
+  "author": "Brandon Farmer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bthesorceror/arcade_keys/issues"
+  },
+  "homepage": "https://github.com/bthesorceror/arcade_keys",
+  "dependencies": {
+    "frontdesk": "git://github.com/bthesorceror/frontdesk",
+    "underscore": "^1.6.0",
+    "jquery": "^2.1.0"
+  }
+}
