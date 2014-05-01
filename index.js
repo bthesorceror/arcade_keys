@@ -1,8 +1,18 @@
-var $         = require('jquery');
-var _         = require('underscore');
 var FrontDesk = require('frontdesk');
 
-function ArcadeKeys(keys) {
+function press(key) {
+  this.desk.checkin(key);
+}
+
+function release(key) {
+  this.desk.checkout(key);
+}
+
+function clear() {
+  this.desk.evacuate();
+}
+
+function ArcadeKeys() {
   this.desk = new FrontDesk(1);
 }
 
@@ -10,42 +20,30 @@ ArcadeKeys.prototype.isPressed = function(key) {
   return this.desk.isOccupied(key);
 }
 
-ArcadeKeys.prototype.press = function(key) {
-  this.desk.checkin(key);
-}
-
-ArcadeKeys.prototype.release = function(key) {
-  this.desk.checkout(key);
-}
-
-ArcadeKeys.prototype.clear = function() {
-  this.desk.evacuate();
-}
-
 function initialize(keys, selector) {
-  var ak   = new ArcadeKeys(keys);
-  var $el  = $(selector);
+  var ak   = new ArcadeKeys();
+  var el  = selector ? document.querySelector(selector) : document;
 
   var guard = function(cb) {
     return function(e) {
-      if (_.contains(keys, e.keyCode)) {
+      if (keys.indexOf(e.keyCode) >= 0) {
         e.preventDefault();
         cb(e);
       }
     }
   };
 
-  $el.on('keydown', guard(function(e) {
-    ak.press(e.keyCode);
+  el.addEventListener('keydown', guard(function(e) {
+    press.call(ak, e.keyCode);
   }));
 
-  $el.on('keyup', guard(function(e) {
-    ak.release(e.keyCode);
+  el.addEventListener('keyup', guard(function(e) {
+    release.call(ak, e.keyCode);
   }));
 
-  $(window).on('blur', function() {
-    ak.clear();
-  });
+  window.onblur = function() {
+    clear.call(ak);
+  };
 
   return ak;
 }

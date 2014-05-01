@@ -21,8 +21,6 @@
   },
   "homepage": "https://github.com/bthesorceror/arcade_keys",
   "dependencies": {
-    "frontdesk": "git://github.com/bthesorceror/frontdesk",
-    "underscore": "^1.6.0",
-    "jquery": "^2.1.0"
+    "frontdesk": "git://github.com/bthesorceror/frontdesk"
   }
 }
