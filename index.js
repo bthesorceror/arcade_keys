@@ -53,7 +53,11 @@ initialize.keys = {
   right: 39,
   up: 38,
   down: 40,
-  space: 32
+  space: 32,
+  w: 87,
+  s: 83,
+  a: 65,
+  d: 68
 }
 
 module.exports = initialize;
