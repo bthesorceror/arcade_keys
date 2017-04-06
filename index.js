@@ -1,51 +1,58 @@
-var FrontDesk = require('frontdesk');
+var FrontDesk = require('frontdesk')
 
-function press(key) {
-  this.desk.checkin(key);
+function press (key) {
+  this.desk.checkin(key)
 }
 
-function release(key) {
-  this.desk.checkout(key);
+function release (key) {
+  this.desk.checkout(key)
 }
 
-function clear() {
-  this.desk.evacuate();
+function clear () {
+  this.desk.evacuate()
 }
 
-function ArcadeKeys() {
-  this.desk = new FrontDesk(1);
+function ArcadeKeys () {
+  this.desk = new FrontDesk(1)
 }
 
-ArcadeKeys.prototype.isPressed = function(key) {
-  return this.desk.isOccupied(key);
+ArcadeKeys.prototype.isPressed = function (key) {
+  return this.desk.isOccupied(key)
 }
 
-function initialize(keys, selector) {
-  var ak   = new ArcadeKeys();
-  var el  = selector ? document.querySelector(selector) : document;
+function initialize (selector, keys) {
+  var ak = new ArcadeKeys()
+  var el = selector ? document.querySelector(selector) : document
 
-  var guard = function(cb) {
-    return function(e) {
+  if (!keys) {
+    keys = Object.keys(initialize.keys).reduce(function (acc, k) {
+      acc.push(initialize.keys[k])
+      return acc
+    }, [])
+  }
+
+  var guard = function (cb) {
+    return function (e) {
       if (keys.indexOf(e.keyCode) >= 0) {
-        e.preventDefault();
-        cb(e);
+        e.preventDefault()
+        cb(e)
       }
     }
-  };
+  }
 
-  el.addEventListener('keydown', guard(function(e) {
-    press.call(ak, e.keyCode);
-  }));
+  el.addEventListener('keydown', guard(function (e) {
+    press.call(ak, e.keyCode)
+  }))
 
-  el.addEventListener('keyup', guard(function(e) {
-    release.call(ak, e.keyCode);
-  }));
+  el.addEventListener('keyup', guard(function (e) {
+    release.call(ak, e.keyCode)
+  }))
 
-  window.onblur = function() {
-    clear.call(ak);
-  };
+  window.onblur = function () {
+    clear.call(ak)
+  }
 
-  return ak;
+  return ak
 }
 
 initialize.keys = {
@@ -60,4 +67,4 @@ initialize.keys = {
   d: 68
 }
 
-module.exports = initialize;
+module.exports = initialize
