@@ -14,8 +14,11 @@
     "arcade",
     "controls"
   ],
-  "author": "Brandon Farmer <bthesorceror@gmail.com>",
   "contributors": [
+    {
+      "name": "Brandon Farmer",
+      "email": "bthesorceror@gmail.com"
+    },
     {
       "name": "Katy Farmer",
       "email": "dreadpiratekaty@gmail.com"
