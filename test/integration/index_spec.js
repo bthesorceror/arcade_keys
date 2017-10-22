@@ -1,29 +1,47 @@
-var ArcadeKeys = require('../../index')
-var expect = require('expect')
+/* eslint-env mocha */
 
-describe('key press is stored', function () {
-  it('returns that the key is not pressed', function () {
-    var ak = ArcadeKeys()
-    expect(ak.isPressed(ArcadeKeys.keys.up)).toBe(false)
+const ArcadeKeys = require('../../index')
+const expect = require('expect')
+
+describe('key press is stored', () => {
+  it('returns that the key is not pressed', () => {
+    let ak = ArcadeKeys()
+
+    expect(ak.isPressed('up')).toBe(false)
   })
 
-  it('retuns that the key is pressed', function () {
-    var ak = ArcadeKeys()
+  it('returns that the key is pressed', () => {
+    let ak = ArcadeKeys()
+
     simulateKeyPress('keydown')
-    expect(ak.isPressed(ArcadeKeys.keys.up)).toBe(true)
+    expect(ak.isPressed('up')).toBe(true)
+
     simulateKeyPress('keyup')
-    expect(ak.isPressed(ArcadeKeys.keys.up)).toBe(false)
+    expect(ak.isPressed('up')).toBe(false)
+  })
+})
+
+describe('on blur', () => {
+  it('clears keys', () => {
+    let ak = ArcadeKeys()
+
+    simulateKeyPress('keydown')
+    expect(ak.isPressed('up')).toBe(true)
+
+    simulateBlur()
+    expect(ak.isPressed('up')).toBe(false)
   })
 })
 
 function simulateKeyPress (eventType) {
-  var e = new window.Event(eventType)
-  e.keyCode = ArcadeKeys.keys.up
-  e.which = e.keyCode
-  e.altKey = false
-  e.ctrlKey = false
-  e.shiftKey = false
-  e.metaKey = false
-  e.bubbles = true
+  let e = new window.Event(eventType)
+
+  e.key = 'up'
   document.dispatchEvent(e)
+}
+
+function simulateBlur () {
+  let e = new window.Event('blur')
+
+  window.dispatchEvent(e)
 }

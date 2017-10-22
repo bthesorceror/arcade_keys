@@ -1,6 +1,6 @@
 {
   "name": "arcade_keys",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Front end module for arcade controls",
   "main": "index.js",
   "scripts": {

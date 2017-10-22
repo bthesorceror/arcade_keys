@@ -1,4 +1,4 @@
-var FrontDesk = require('frontdesk')
+const FrontDesk = require('frontdesk')
 
 function press (key) {
   this.desk.checkin(key)
@@ -20,51 +20,29 @@ ArcadeKeys.prototype.isPressed = function (key) {
   return this.desk.isOccupied(key)
 }
 
-function initialize (selector, keys) {
-  var ak = new ArcadeKeys()
-  var el = selector ? document.querySelector(selector) : document
+function initialize (el = document) {
+  const ak = new ArcadeKeys()
 
-  if (!keys) {
-    keys = Object.keys(initialize.keys).reduce(function (acc, k) {
-      acc.push(initialize.keys[k])
-      return acc
-    }, [])
-  }
-
-  var guard = function (cb) {
+  const guard = (cb) => {
     return function (e) {
-      if (keys.indexOf(e.keyCode) >= 0) {
-        e.preventDefault()
-        cb(e)
-      }
+      e.preventDefault()
+      cb(e)
     }
   }
 
   el.addEventListener('keydown', guard(function (e) {
-    press.call(ak, e.keyCode)
+    press.call(ak, e.key)
   }))
 
   el.addEventListener('keyup', guard(function (e) {
-    release.call(ak, e.keyCode)
+    release.call(ak, e.key)
   }))
 
-  window.onblur = function () {
+  window.addEventListener('blur', () => {
     clear.call(ak)
-  }
+  })
 
   return ak
-}
-
-initialize.keys = {
-  left: 37,
-  right: 39,
-  up: 38,
-  down: 40,
-  space: 32,
-  w: 87,
-  s: 83,
-  a: 65,
-  d: 68
 }
 
 module.exports = initialize
