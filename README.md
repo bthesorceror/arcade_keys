@@ -4,17 +4,15 @@ Arcade Keys is a module to provide keypress tracking for gameplay.
 ### Usage
 ```javascript
 
-  let arcadeKeys = ArcadeKeys('canvas', [
-    ArcadeKeys.keys.up,
-    ArcadeKeys.keys.down,
-    ArcadeKeys.keys.left,
-    ArcadeKeys.keys.right
-  ])
+  let el = document.querySelector('canvas')
+
+  let arcadeKeys = ArcadeKeys(el)
   
-  if (arcadeKeys.isPressed(ArcadeKeys.keys.up)) {
+  if (arcadeKeys.isPressed('up')) {
     alert('You pressed up!')
   }
 ```
+
 ### Tests
 Test are written using mocha/expect and run via karma.
 
